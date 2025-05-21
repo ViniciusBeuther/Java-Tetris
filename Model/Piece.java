@@ -2,6 +2,8 @@ package FinalProject_Tetris.Model;
 
 import java.awt.*;
 
+import FinalProject_Tetris.Misc.SoundUtils;
+
 public class Piece{
     private int[][] shape;
     private int row;
@@ -36,11 +38,17 @@ public class Piece{
     }
 
     public void movePieceLeft(Cell[][] board){
-        if(canMoveTo(row, col - 1, board)) col--;
+        if(canMoveTo(row, col - 1, board)) {
+        	col--;
+        	SoundUtils.playSound("/lateral_movement.wav");
+        };
     }
 
     public void movePieceRight(Cell[][] board){
-        if(canMoveTo(row, col + 1, board)) col++;
+        if(canMoveTo(row, col + 1, board)) {
+        	col++;
+        	SoundUtils.playSound("/lateral_movement.wav");
+        };
     }
 
     public void rotatePiece(){
@@ -55,6 +63,7 @@ public class Piece{
         }
 
         this.shape = rotated;
+        SoundUtils.playSound("/rotate.wav");
     }
 
     public boolean hasCollision(Cell[][] board, int nextRow, int nextColumn){

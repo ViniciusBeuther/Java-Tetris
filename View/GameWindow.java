@@ -1,6 +1,7 @@
 package FinalProject_Tetris.View;
 
 import FinalProject_Tetris.Controller.TetrisController;
+import FinalProject_Tetris.Misc.SoundUtils;
 import FinalProject_Tetris.Model.Cell;
 import FinalProject_Tetris.Model.Piece;
 import FinalProject_Tetris.Model.PieceFactory;
@@ -88,7 +89,9 @@ public class GameWindow {
 
                 if(nextPieceHolder[0].hasCollision(board, nextPieceHolder[0].getRow(), nextPieceHolder[0].getCol())){
                     ((Timer) e.getSource()).stop();
+                    SoundUtils.playSound("/game_over.wav");
                     JOptionPane.showMessageDialog(null, "Game over!");
+                    
                     System.exit(0);
                 } else {
                     tetrisView.setCurrentPiece(nextPieceHolder[0]);
