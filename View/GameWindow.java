@@ -8,6 +8,10 @@ import FinalProject_Tetris.Model.PieceFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class GameWindow {
     private int[] level;
@@ -90,7 +94,19 @@ public class GameWindow {
                 if(nextPieceHolder[0].hasCollision(board, nextPieceHolder[0].getRow(), nextPieceHolder[0].getCol())){
                     ((Timer) e.getSource()).stop();
                     SoundUtils.playSound("/game_over.wav");
-                    JOptionPane.showMessageDialog(null, "Game over!");
+                    // JOptionPane.showMessageDialog(null, "Game over!");
+                    
+                    String username = JOptionPane.showInputDialog(null, "Game over!\nPut your name here if you want to save your score:", "Input Dialog", JOptionPane.PLAIN_MESSAGE);
+
+                    if (username != "") {
+                    	try (BufferedWriter writer = new BufferedWriter(new FileWriter("scores.txt", true))) {
+                            writer.write(username + ": " + numberOfRowsCleaned[0] + "\n");
+                        } catch (IOException er) {
+                            System.err.println("An error occurred while writing to the file: " + er.getMessage());
+                        }
+                    } else {
+                        System.out.println("User doesn't want to save the score.");
+                    }                    
                     
                     System.exit(0);
                 } else {
