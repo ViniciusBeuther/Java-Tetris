@@ -104,7 +104,7 @@ public class GameWindow {
                     String username = JOptionPane.showInputDialog(null, "Game over!\nPut your name here if you want to save your score:", "Input Dialog", JOptionPane.PLAIN_MESSAGE);
 
                     if (username != "") {
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter("scores.txt", true))) {
+                    	try (BufferedWriter writer = new BufferedWriter(new FileWriter("scores.txt", true))) {
                             writer.write(username + ": " + numberOfRowsCleaned[0] + "\n");
                         } catch (IOException er) {
                             System.err.println("An error occurred while writing to the file: " + er.getMessage());
@@ -118,34 +118,34 @@ public class GameWindow {
                     
                     Map<String, Integer> scores = new HashMap<>();
                     BufferedReader reader = null;
-                    try {
-                        reader = new BufferedReader(new FileReader("scores.txt"));
-                    } catch (FileNotFoundException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+					try {
+						reader = new BufferedReader(new FileReader("scores.txt"));
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                     String line;
                     
                     try {
-                        while ((line = reader.readLine()) != null) {
-                            String[] fields = line.split("\\s+");
-                            String name = fields[0].substring(0, fields[0].length() - 1);
-                            int score = Integer.parseInt(fields[1]);
-                            scores.put(name, score);
-                        }
-                    } catch (NumberFormatException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+						while ((line = reader.readLine()) != null) {
+						    String[] fields = line.split("\\s+");
+						    String name = fields[0].substring(0, fields[0].length() - 1);
+						    int score = Integer.parseInt(fields[1]);
+						    scores.put(name, score);
+						}
+					} catch (NumberFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                     try {
-                        reader.close();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+						reader.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
                     for (int i = 1; i <= n; i++) {
                         String maxName = null;
@@ -183,4 +183,3 @@ public class GameWindow {
     }
 
 }
-
