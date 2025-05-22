@@ -39,31 +39,69 @@ public class Piece{
 
     public void movePieceLeft(Cell[][] board){
         if(canMoveTo(row, col - 1, board)) {
-        	col--;
-        	SoundUtils.playSound("/lateral_movement.wav");
+            col--;
+            SoundUtils.playSound("/lateral_movement.wav");
         };
     }
 
     public void movePieceRight(Cell[][] board){
         if(canMoveTo(row, col + 1, board)) {
-        	col++;
-        	SoundUtils.playSound("/lateral_movement.wav");
+            col++;
+            SoundUtils.playSound("/lateral_movement.wav");
         };
     }
 
-    public void rotatePiece(){
+    public void rotatePiece(Cell[][] board){
+        if(canRotate(board)) {
+            int rows = shape.length;
+            int cols = shape[0].length;
+            int[][] rotated = new int[cols][rows];
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    rotated[j][rows - 1 - i] = shape[i][j];
+                }
+            }
+            this.shape = rotated;
+            SoundUtils.playSound("/rotate.wav");
+        }
+    }
+
+    public boolean canRotate(Cell[][] board){
         int rows = shape.length;
         int cols = shape[0].length;
-        int[][] rotated = new int[cols][rows];
+        int[][] rotatedShape = new int[cols][rows];
 
+        // Create the rotated shape
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                rotated[j][rows - 1 - i] = shape[i][j];
+                rotatedShape[j][rows - 1 - i] = shape[i][j];
             }
         }
 
-        this.shape = rotated;
-        SoundUtils.playSound("/rotate.wav");
+        // Check if the rotated shape can fit at current position
+        return canShapeFitAt(rotatedShape, row, col, board);
+    }
+
+    private boolean canShapeFitAt(int[][] shapeToCheck, int checkRow, int checkCol, Cell[][] board){
+        for(int i = 0; i < shapeToCheck.length; i++){
+            for(int j = 0; j < shapeToCheck[i].length; j++){
+                if(shapeToCheck[i][j] != 0){
+                    int boardRow = checkRow + i;
+                    int boardCol = checkCol + j;
+
+                    // Check row limits (vertical)
+                    if(boardRow >= board.length || boardRow < 0) return false;
+
+                    // Check horizontal limits
+                    if(boardCol < 0 || boardCol >= board[0].length) return false;
+
+                    // Check collision with other piece
+                    if(board[boardRow][boardCol].isFilled()) return false;
+                }
+            }
+        }
+        return true;
     }
 
     public boolean hasCollision(Cell[][] board, int nextRow, int nextColumn){

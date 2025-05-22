@@ -25,7 +25,7 @@ public class TetrisController{
                     case KeyEvent.VK_LEFT -> piece.movePieceLeft(tetrisView.getBoard());
                     case KeyEvent.VK_RIGHT -> piece.movePieceRight(tetrisView.getBoard());
                     case KeyEvent.VK_DOWN -> piece.movePieceDown(tetrisView.getBoard());
-                    case KeyEvent.VK_UP -> piece.rotatePiece();
+                    case KeyEvent.VK_UP -> piece.rotatePiece(tetrisView.getBoard());
                 }
 
                 tetrisView.repaint();
