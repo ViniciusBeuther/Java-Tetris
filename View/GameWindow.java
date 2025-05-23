@@ -51,7 +51,7 @@ public class GameWindow {
         JFrame window = new JFrame();
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(view, BorderLayout.CENTER);
-        mainPanel.add(side, BorderLayout.EAST);
+        mainPanel.add(side, BorderLayout.WEST);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.add(mainPanel);

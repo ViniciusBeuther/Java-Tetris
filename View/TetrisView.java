@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TetrisView extends JPanel{
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 480; //1280
+    public static final int HEIGHT = 720; //720
     public static final int cellSize = 30;
     private static final int OFFSET_X = (WIDTH - (10 * cellSize)) / 2;
     private static final int OFFSET_Y = (HEIGHT - (20 * cellSize)) / 2;
