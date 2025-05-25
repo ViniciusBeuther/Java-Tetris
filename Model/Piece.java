@@ -4,12 +4,20 @@ import java.awt.*;
 
 import FinalProject_Tetris.Misc.SoundUtils;
 
+/**
+ * Class responsible for the piece handling, move the piece over the board, define the position, color and shape.
+ * Is also responsible to rotate the piece and check for collisions. Includes getters and setters.
+ * */
 public class Piece{
     private int[][] shape;
     private int row;
     private int col;
     private Color color;
 
+    /** constructor, initialize the class attributes
+     * @param shape: random shape created by PieceFactory
+     * @param color: random color created by PieceFactory
+     * */
     public Piece(int[][] shape, Color pieceColor){
         this.shape = shape;
         this.row = 0;
@@ -51,6 +59,7 @@ public class Piece{
         };
     }
 
+    // Method that rotates the piece
     public void rotatePiece(Cell[][] board){
         if(canRotate(board)) {
             int rows = shape.length;
@@ -67,6 +76,8 @@ public class Piece{
         }
     }
 
+    // Method that checks if it is possible to rotate the piece, check if it is not too close to the edges
+    // to avoid bugs
     public boolean canRotate(Cell[][] board){
         int rows = shape.length;
         int cols = shape[0].length;
@@ -83,6 +94,7 @@ public class Piece{
         return canShapeFitAt(rotatedShape, row, col, board);
     }
 
+    // Check if the shape can be moved to a position
     private boolean canShapeFitAt(int[][] shapeToCheck, int checkRow, int checkCol, Cell[][] board){
         for(int i = 0; i < shapeToCheck.length; i++){
             for(int j = 0; j < shapeToCheck[i].length; j++){
@@ -104,6 +116,7 @@ public class Piece{
         return true;
     }
 
+    // Verify if the there is collision with other pieces, edges or bottom
     public boolean hasCollision(Cell[][] board, int nextRow, int nextColumn){
         int[][] shape = this.getShape();
 
@@ -129,6 +142,7 @@ public class Piece{
         return false;
     }
 
+    // Check if we can move to a position, used in movement
     public boolean canMoveTo(int newRow, int newCol, Cell[][] board){
         int[][] shape = this.getShape();
 
@@ -153,6 +167,7 @@ public class Piece{
         return true;
     }
 
+    // Fix the piece in the board.
     public void fixPieceInBoard(Piece piece, Cell[][] board){
         int[][] shape = piece.getShape();
         int row = piece.getRow();

@@ -19,17 +19,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * This class takes care of the game loop, where we have attributes to save the level,
+ * number of rows cleaned and an initial delay, which will be increased over the time/level ups.
+ *
+ * We also have the getters/setters
+ * */
 public class GameWindow {
     private int[] level;
     private int[] numberOfRowsCleaned;
     private int initialDelay;
     Timer[] gameTimer = new Timer[1];
 
+    // Constructor, initialize the level/delay and number of rows cleaned
     public GameWindow(){
         setLevel(new int[]{1});
         setNumberOfRowsCleaned(new int[] {0});
         setInitialDelay(800);
-
     }
 
     public void setLevel(int[] level) {
@@ -46,7 +52,10 @@ public class GameWindow {
 
     /**
      * Start the window
-     * @param view: the TetrisView component, where it stores the board and window specifications
+     * @param view: the TetrisView component, where it stores the board and window specifications (board)
+     * @param side: is the Side bar containing extra info such as levels, next piece and leaderboard.
+     *
+     * It also start the game window.
      * */
     public void initializeWindow(TetrisView view, SidePanel side){
         JFrame window = new JFrame();
@@ -85,7 +94,10 @@ public class GameWindow {
         tetrisView.requestFocusInWindow();
         TetrisController tc = new TetrisController(tetrisView);
 
-        /* Game loop */
+        /* Game loop, also verify the collisions,
+        * it finishes the game if the user lost, handle the score saving
+        *  and the timer loop, move the piece down every X seconds
+        **/
         gameTimer[0] = new Timer(initialDelay, e-> {
             Piece current = tetrisView.getCurrentPiece();
             Cell[][] board = tetrisView.getBoard();

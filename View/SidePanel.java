@@ -14,6 +14,8 @@ import java.util.List;
  * The attributes here are to represent this information,
  * the nextShape represents the next piece to fall and next color represents
  * the piece color.
+ *
+ * Getters and setters are also included in this class.
  * */
 public class SidePanel extends JPanel {
     private JLabel levelLabel;
@@ -24,7 +26,7 @@ public class SidePanel extends JPanel {
 
     /**
      * Constructor method, it sets the panel dimensions and colors,
-     * it also 
+     * it also responsible for insert the Level/Leaderboard
      * */
     public SidePanel() {
         setPreferredSize(new Dimension(150, 200));
@@ -118,6 +120,10 @@ public class SidePanel extends JPanel {
         nextPiecePanel.repaint();
     }
 
+    /**
+     * Method responsible to open the score.txt file where is located all the best scores,
+     * and sorts the content to display the best players.
+     * */
     private void loadLeaderBoard(){
         StringBuilder leader = new StringBuilder();
         File file = new File("scores.txt");
