@@ -24,6 +24,7 @@ public class PieceFactory{
 
     // Gets a random piece
     public Piece createRandomPiece(){
+        System.out.println("Log (Piece Factory): Creating random Piece.");
         int[][] shape = SHAPES[this.random.nextInt(SHAPES.length)];
         Color color = getRandomColor();
 
@@ -32,6 +33,7 @@ public class PieceFactory{
 
     // Gets a random color
     private Color getRandomColor(){
+        System.out.println("Log (Piece Factory): getting Piece color.");
         Color[] colors = {
                 Color.RED, Color.GREEN, Color.YELLOW,
                 Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.PINK

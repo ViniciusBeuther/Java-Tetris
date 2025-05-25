@@ -31,6 +31,7 @@ public class TetrisView extends JPanel{
      * Constructor, where we initialize the board and define every of its properties.
      * */
     public TetrisView(){
+        System.out.println("Log (Tetris View): starting Tetris View class.");
         /* Initialize with empty cells */
         for(int i=0; i < board.length; i++){
             for(int j=0; j < board[i].length; j++){
@@ -75,6 +76,7 @@ public class TetrisView extends JPanel{
     // Paint the component, draw the piece and board, override of a method
     @Override
     protected void paintComponent(Graphics g){
+        System.out.println("Log (Tetris View): painting component.");
         super.paintComponent(g);
         this.drawBoard(g);
         this.drawPiece(g);
@@ -86,6 +88,7 @@ public class TetrisView extends JPanel{
      * This method paint the piece in the board.
      * */
     public void drawPiece(Graphics g){
+        // System.out.println("Log (Tetris View): drawing piece.");
         if(this.currentPiece == null) return;
 
         Graphics2D g2d = (Graphics2D) g;
@@ -119,6 +122,8 @@ public class TetrisView extends JPanel{
      * loop over the matrix and paint the cells
      **/
     public void drawBoard(Graphics g) {
+        // System.out.println("Log (Tetris View): drawing board.");
+
         Graphics2D g2d = (Graphics2D) g;
         int cellSize = 30;
 
@@ -151,6 +156,7 @@ public class TetrisView extends JPanel{
         int rows = board.length;
         int columns = board[0].length;
         int linesCleanedCounter = 0;
+        System.out.println("Log (Tetris View): Check if can clean lines (if line is full).");
 
 
         for(int i = rows - 1; i >= 0; i--){
@@ -165,6 +171,8 @@ public class TetrisView extends JPanel{
 
             // if the line is full, moving the row above one line down.
             if(isFullLine){
+                System.out.println("Log (Tetris View): line is full, removing line and shifting.");
+
                 for(int k=i; k > 0; k--){
                     board[k] = board[k - 1].clone();
                 }

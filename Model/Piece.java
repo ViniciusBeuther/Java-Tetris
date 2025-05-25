@@ -47,6 +47,7 @@ public class Piece{
 
     public void movePieceLeft(Cell[][] board){
         if(canMoveTo(row, col - 1, board)) {
+        System.out.println("Log (Piece): Moved piece left.");
             col--;
             SoundUtils.playSound("/lateral_movement.wav");
         };
@@ -54,6 +55,7 @@ public class Piece{
 
     public void movePieceRight(Cell[][] board){
         if(canMoveTo(row, col + 1, board)) {
+            System.out.println("Log (Piece): Moved piece right.");
             col++;
             SoundUtils.playSound("/lateral_movement.wav");
         };
@@ -62,6 +64,7 @@ public class Piece{
     // Method that rotates the piece
     public void rotatePiece(Cell[][] board){
         if(canRotate(board)) {
+            System.out.println("Log (Piece): Piece rotated.");
             int rows = shape.length;
             int cols = shape[0].length;
             int[][] rotated = new int[cols][rows];
@@ -79,6 +82,7 @@ public class Piece{
     // Method that checks if it is possible to rotate the piece, check if it is not too close to the edges
     // to avoid bugs
     public boolean canRotate(Cell[][] board){
+        System.out.println("Log (Piece): verify if piece can rotate.");
         int rows = shape.length;
         int cols = shape[0].length;
         int[][] rotatedShape = new int[cols][rows];
@@ -128,11 +132,13 @@ public class Piece{
 
                     // check collision with border
                     if (boardRow >= board.length || boardCol < 0 || boardCol >= board[0].length) {
+                        System.out.println("Log (Piece): Border collision.");
                         return true;
                     }
 
                     // Check collision with other fixed pieces
                     if (boardRow >= 0 && board[boardRow][boardCol] != null && board[boardRow][boardCol].isFilled()) {
+                        System.out.println("Log (Piece): Fixed pieces collision.");
                         return true;
                     }
                 }
@@ -145,7 +151,7 @@ public class Piece{
     // Check if we can move to a position, used in movement
     public boolean canMoveTo(int newRow, int newCol, Cell[][] board){
         int[][] shape = this.getShape();
-
+        System.out.println("Log (Piece): verify if piece can move to a position.");
         for(int i = 0; i < shape.length; i++){
             for(int j = 0; j < shape[i].length; j++){
                 if(shape[i][j] != 0){
@@ -172,7 +178,7 @@ public class Piece{
         int[][] shape = piece.getShape();
         int row = piece.getRow();
         int col = piece.getCol();
-
+        System.out.println("Log (Piece): Fixing piece on the board.");
         for(int i=0; i < shape.length; i++){
             for(int j=0; j < shape[i].length; j++){
                 if(shape[i][j] != 0){

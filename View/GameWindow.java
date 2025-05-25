@@ -58,6 +58,7 @@ public class GameWindow {
      * It also start the game window.
      * */
     public void initializeWindow(TetrisView view, SidePanel side){
+        System.out.println("Log (GameWindow): Building game window.");
         JFrame window = new JFrame();
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(view, BorderLayout.CENTER);
@@ -76,7 +77,7 @@ public class GameWindow {
      **/
     public void start() {
         PieceFactory factory = new PieceFactory();
-
+        System.out.println("Log (Game Window): starting game...");
         // using arrays to avoid issue in timer loop
         final Piece[] currentPieceHolder = {factory.createRandomPiece()};
         final Piece[] nextPieceHolder = {factory.createRandomPiece()};
@@ -98,6 +99,7 @@ public class GameWindow {
         * it finishes the game if the user lost, handle the score saving
         *  and the timer loop, move the piece down every X seconds
         **/
+        System.out.println("Log (Game Window): Starting timer(loop).");
         gameTimer[0] = new Timer(initialDelay, e-> {
             Piece current = tetrisView.getCurrentPiece();
             Cell[][] board = tetrisView.getBoard();
@@ -113,12 +115,15 @@ public class GameWindow {
                     ((Timer) e.getSource()).stop();
                     SoundUtils.playSound("/game_over.wav");
                     // JOptionPane.showMessageDialog(null, "Game over!");
-                    
+                    System.out.println("Log (Game Window): Game over, getting username.");
+
                     String username = JOptionPane.showInputDialog(null, "Game over!\nPut your name here if you want to save your score:", "Input Dialog", JOptionPane.PLAIN_MESSAGE);
 
                     if (username != "") {
                         try (BufferedWriter writer = new BufferedWriter(new FileWriter("scores.txt", true))) {
                             writer.write(username + ": " + numberOfRowsCleaned[0] + "\n");
+                            System.out.println("Log (Game Window): Username saved on score.txt.");
+
                         } catch (IOException er) {
                             System.err.println("An error occurred while writing to the file: " + er.getMessage());
                         }
@@ -126,8 +131,10 @@ public class GameWindow {
                         System.out.println("User doesn't want to save the score.");
                     }
 
-                    
+
+
                     // Player's score
+                    System.out.println("Log (Game Window): Show player score.");
                     JOptionPane.showMessageDialog(null, "Your score is: " + numberOfRowsCleaned[0]);
 
                     
