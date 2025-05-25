@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -112,52 +113,67 @@ public class GameWindow {
                     } else {
                         System.out.println("User doesn't want to save the score.");
                     }
+
+                    
+                    // Player's score
+                    JOptionPane.showMessageDialog(null, "Your score is: " + numberOfRowsCleaned[0]);
+
                     
                     // Print out the top n scores saved in the leaderboard
                     int n = 3;
                     
                     Map<String, Integer> scores = new HashMap<>();
                     BufferedReader reader = null;
-                    try {
-                        reader = new BufferedReader(new FileReader("scores.txt"));
-                    } catch (FileNotFoundException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+					try {
+						reader = new BufferedReader(new FileReader("scores.txt"));
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                     String line;
                     
                     try {
-                        while ((line = reader.readLine()) != null) {
-                            String[] fields = line.split("\\s+");
-                            String name = fields[0].substring(0, fields[0].length() - 1);
-                            int score = Integer.parseInt(fields[1]);
-                            scores.put(name, score);
-                        }
-                    } catch (NumberFormatException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                    try {
-                        reader.close();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+						while ((line = reader.readLine()) != null) {
+						    String[] fields = line.split(":");
+						    String name = fields[0].trim();
+						    int score = Integer.parseInt(fields[1].trim());
+							if (!scores.containsKey(name) || score > scores.get(name)) {
+								scores.put(name, score);
+							}
 
-                    for (int i = 1; i <= n; i++) {
+						}
+					} catch (NumberFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                    try {
+						reader.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+                    StringBuilder ranking = new StringBuilder("🏆 Top " + n + " Scores 🏆\n\n");
+                    for (int i = 1; i <= n && !scores.isEmpty(); i++) {
                         String maxName = null;
+                        int maxValue = Integer.MIN_VALUE;
                         for (String name : scores.keySet()) {
-                            if (maxName == null || name.compareTo(maxName) > 0) {
+                        	int value = scores.get(name);
+                            if (maxName == null || value > maxValue) {
                                 maxName = name;
+                                maxValue = value;
                             }
                         }
-                        int maxValue = scores.get(maxName);
-                        System.out.printf("Position number %d:%n -%s: %d%n", i, maxName, maxValue);
+                        ranking.append(String.format("%d. %s - %d\n", i, maxName, maxValue));
                         scores.remove(maxName);
                     }
+                    
+
+                    // Show ranking
+                    JOptionPane.showMessageDialog(null, ranking.toString(), "Leaderboard", JOptionPane.INFORMATION_MESSAGE);
                     
                     System.exit(0);
                     
