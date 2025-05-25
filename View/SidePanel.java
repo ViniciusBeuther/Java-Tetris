@@ -7,6 +7,14 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * This class is responsible to be the side panel, where we have the information about
+ * leaderboard, next piece and the level.
+ *
+ * The attributes here are to represent this information,
+ * the nextShape represents the next piece to fall and next color represents
+ * the piece color.
+ * */
 public class SidePanel extends JPanel {
     private JLabel levelLabel;
     private JPanel nextPiecePanel;
@@ -14,6 +22,10 @@ public class SidePanel extends JPanel {
     private Color nextColor;
     protected JTextArea leaderboardArea;
 
+    /**
+     * Constructor method, it sets the panel dimensions and colors,
+     * it also 
+     * */
     public SidePanel() {
         setPreferredSize(new Dimension(150, 200));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
